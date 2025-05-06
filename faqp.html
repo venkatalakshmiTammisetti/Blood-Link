@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Patient FAQ - Blood Link</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="icon" type="image/x-icon" href="favicon.jpg">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      background: linear-gradient(135deg, #b7b8b8 0%, #79a4e7 100%);
+      font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 30px;
+    }
+
+    .faq-container {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #e64568;
+      margin-bottom: 40px;
+    }
+
+    .faq-item {
+      margin-bottom: 20px;
+      color: #877299; /* Danger Red */
+      padding-bottom: 15px;
+    }
+
+    .faq-question {
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #877299; /* Danger Red */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-answer {
+      display: none;
+      margin-top: 10px;
+      color: #333;
+    }
+
+    .faq-question:hover {
+      text-decoration: underline;
+    }
+
+    .rotate {
+      transform: rotate(180deg);
+      transition: transform 0.3s;
+    }
+
+    .icon {
+      transition: transform 0.3s;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="faq-container">
+    <h2><i class="fas fa-heartbeat me-2"></i> <b>patient FAQs</b></h2>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        How can I request blood through this platform?
+        <i class="fas fa-chevron-down icon"></i>
+      </div>
+      <div class="faq-answer">
+        You can request blood by logging in as a hospital/clinic and filling out the blood request form with patient details and required blood type.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        How quickly will I receive the required blood?
+        <i class="fas fa-chevron-down icon"></i>
+      </div>
+      <div class="faq-answer">
+        Our system notifies nearby donors instantly. Emergency requests are prioritized and fulfilled as soon as a donor is available.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        Is the blood I receive tested and safe?
+        <i class="fas fa-chevron-down icon"></i>
+      </div>
+      <div class="faq-answer">
+        Absolutely. All donated blood is tested for infections and diseases to ensure it is completely safe for transfusion.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        Can I request a specific blood type or component (like platelets)?
+        <i class="fas fa-chevron-down icon"></i>
+      </div>
+      <div class="faq-answer">
+        Yes. Our request form allows you to specify the blood group and component you need (e.g., whole blood, platelets, plasma).
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        How do I know my request is genuine and verified?
+        <i class="fas fa-chevron-down icon"></i>
+      </div>
+      <div class="faq-answer">
+        Our system includes a verification page where hospitals upload necessary documents. Only verified requests are published to protect donor trust.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleFAQ(element) {
+      const answer = element.nextElementSibling;
+      const icon = element.querySelector('.icon');
+      answer.style.display = answer.style.display === "block" ? "none" : "block";
+      icon.classList.toggle('rotate');
+    }
+  </script>
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'en,hi,te,ta,fr,es,ar,zh',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');
+  }
+</script>
+
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</body>
+</html>

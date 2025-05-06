@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blog & Education - Blood Donation</title>
+  <link rel="icon" type="image/x-icon" href="favicon.jpg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f9ff;
+      color: #333;
+    }
+    header {
+      background-color: #007bff;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+   .search-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+    .search-bar input {
+      padding: 10px;
+      width: 70%;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .categories {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .categories button {
+      background-color: #e2ecff;
+      color: #007bff;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    .categories button.active {
+      background-color: #007bff;
+      color: white;
+    }
+    .blog-post {
+      background-color: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+  .blog-post h3 {
+      color: #e96e7c;
+      margin-top: 0;
+    }
+ .post-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+    }
+ .post-footer i {
+      cursor: pointer;
+      margin-right: 5px;
+      color: #ff0000;
+    }
+ .comments {
+      margin-top: 10px;
+    }
+ .comments textarea {
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+ .pagination {
+      text-align: center;
+      margin-top: 30px;
+    }
+.pagination button {
+      background-color: #007bff;
+      color: white;
+      padding: 8px 15px;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }</style></head>
+<body><header><h1>🩸 Blog & Education Hub</h1>
+  <p>Everything you need to know about blood donation for donors, patients, and healthcare providers</p>
+</header><div class="container"><div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search articles...">
+    <div class="categories">
+      <button onclick="filterCategory('All')" class="active">All</button>
+      <button onclick="filterCategory('Blood Info')">Blood Info</button>
+      <button onclick="filterCategory('Donor Tips')">Donor Tips</button>
+      <button onclick="filterCategory('Patient Care')">Patient Care</button>
+      <button onclick="filterCategory('Hospital Guidelines')">Hospital Guidelines</button>
+    </div></div>
+<div id="blogContainer"></div><div class="pagination">
+    <button onclick="prevPage()">Prev</button>
+    <button onclick="nextPage()">Next</button>
+  </div></div><script>
+  const blogPosts = [  {
+      title: "What is Blood Made Of?",
+      category: "Blood Info",
+      content: "Blood contains red blood cells, white blood cells, platelets, and plasma — each with unique and vital roles."
+    }, {
+      title: "Why Blood Types Matter",
+      category: "Blood Info",
+      content: "Knowing your blood type is important for safe transfusions. Type O is the universal donor for red cells, AB for plasma."
+    }, {
+      title: "Before Donating: What Donors Should Know",
+      category: "Donor Tips",
+      content: "Eat iron-rich foods, drink plenty of fluids, avoid alcohol, and rest well. You must be healthy and above 18 years old."
+    }, {
+      title: "After Donating: Recovery Tips",
+      category: "Donor Tips",
+      content: "Keep your bandage on for a few hours, hydrate, and avoid strenuous activity for the rest of the day."
+    },{
+      title: "Essential Guidelines for Hospitals During Blood Collection",
+      category: "Hospital Guidelines",
+      content: "Ensure sterile equipment, verify donor identity, collect proper volume, and store blood at recommended temperatures."
+    },{
+      title: "How Hospitals Should Handle Emergency Blood Requests",
+      category: "Hospital Guidelines",
+      content: "Have a verified request system, contact nearby donors, and coordinate quickly with certified transport."
+    },{
+      title: "What Patients Should Know Before Receiving Blood",
+      category: "Patient Care",
+      content: "Ensure your blood type is matched, confirm donor screening, and understand the reasons for the transfusion."
+    }, {
+      title: "Managing Anxiety Before a Transfusion",
+      category: "Patient Care",
+      content: "It’s natural to feel anxious. Ask questions, stay calm, and let medical staff know if you feel uneasy."
+    }
+  ];let currentPage = 1; const postsPerPage = 3;
+  let currentCategory = "All"; function renderPosts() {
+    const container = document.getElementById("blogContainer");
+    container.innerHTML = "";
+ const searchQuery = document.getElementById("searchInput").value.toLowerCase();
+ const filtered = blogPosts.filter(post => {
+      return (currentCategory === "All" || post.category === currentCategory)
+        && post.title.toLowerCase().includes(searchQuery);
+    });const start = (currentPage - 1) * postsPerPage;
+    const paginatedPosts = filtered.slice(start, start + postsPerPage);
+ paginatedPosts.forEach(post => {
+      const postDiv = document.createElement("div");
+      postDiv.className = "blog-post";
+      postDiv.innerHTML = `
+        <h3>${post.title}</h3>
+        <p><strong>Category:</strong> ${post.category}</p>
+        <p>${post.content}</p>
+        <div class="post-footer">
+          <div><i class="fas fa-thumbs-up" onclick="likePost(this)"></i> <span class="likes">0</span> Likes</div>
+          <div><span>💬 Comments</span></div> </div>
+        <div class="comments">
+          <textarea placeholder="Write a comment..."></textarea>
+        </div>
+      `;
+      container.appendChild(postDiv);
+    });}function likePost(icon) {
+    const likesSpan = icon.nextElementSibling;
+    let count = parseInt(likesSpan.textContent);
+    likesSpan.textContent = ++count;
+  }function filterCategory(category) {
+    currentCategory = category;
+    currentPage = 1;
+    document.querySelectorAll(".categories button").forEach(btn => btn.classList.remove("active"));
+    event.target.classList.add("active");
+    renderPosts(); }function nextPage() {
+    const totalFiltered = blogPosts.filter(p => currentCategory === "All" || p.category === currentCategory).length;
+    if (currentPage * postsPerPage < totalFiltered) {
+      currentPage++;
+      renderPosts();
+    } }function prevPage() {
+    if (currentPage > 1) {
+      currentPage--;
+      renderPosts(); } }
+ document.getElementById("searchInput").addEventListener("input", () => {
+    currentPage = 1;
+    renderPosts();
+  });
+  renderPosts();</script><script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'en,hi,te,ta,fr,es,ar,zh',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');}</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body></html>

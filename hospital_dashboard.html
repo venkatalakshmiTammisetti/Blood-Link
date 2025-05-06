@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospital Dashboard</title>
+  <link rel="icon" type="image/x-icon" href="favicon.jpg">
+  <style>body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #b7b8b8 0%, #79a4e7 100%);
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      color: #9c1aa2;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    h2 {
+      border-bottom: 2px solid #eee;
+      padding-bottom: 10px;
+      margin-top: 30px;
+    }
+    .btn-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    button, .btn {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+    .btn-primary {
+      background-color: #3498db;
+      color: white;
+    }
+    .btn-danger {
+      background-color: #e74c3c;
+      color: white;
+    }
+    .btn-success {
+      background-color: #2ecc71;
+      color: white;
+    }
+    .btn-warning {
+      background-color: #f39c12;
+      color: white;
+    }
+    .btn-secondary {
+      background-color: #95a5a6;
+      color: white;
+    }
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #3498db;
+      color: white;
+    }
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+    .status {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .status-pending {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+    .status-accepted {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .status-critical {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+    .status-available {
+      background-color: #d1ecf1;
+      color: #0c5460;
+    }
+    .alert {
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 4px;
+    }
+    .alert-info {
+      background-color: #d1ecf1;
+      color: #0c5460;
+    }
+    .alert-warning {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+    .alert-danger {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+    .filter-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin: 15px 0;
+      align-items: center;
+    }
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    label {
+      font-weight: bold;
+      min-width: 80px;
+    }
+    select, input {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      min-width: 150px;
+    }
+    .search-box {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      min-width: 200px;
+    }
+    .reset-btn {
+      background-color: #95a5a6;
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .status-eligible {
+  background-color: #d4edda;
+  color: #155724;
+}
+.status-ineligible {
+  background-color: #f8d7da;
+  color: #721c24;
+}</style></head><body><div class="container">
+    <h1>Hospital Dashboard</h1>
+    <div id="welcomeHospital" class="welcome-message"></div>
+<div class="btn-container">
+      <button class="btn btn-primary" onclick="location.href='request-bloodh.html'">Request Blood</button>
+      <button class="btn btn-success" onclick="loadDonors()">View Nearby Donors</button>
+      <button class="btn btn-warning" onclick="location.href='emergencybloodrequest.html'">Emergency Request</button>
+      <button class="btn btn-secondary" onclick="location.href='blood_stock_management.html'">Manage Blood Stock</button>
+      <button class="btn btn-danger" onclick="logout()">Logout</button>
+    </div><h2>Manage Blood Requests</h2>
+    <div class="filter-container">
+      <div class="filter-group">
+        <label for="requestDateFilter">Filter by Date:</label>
+        <select id="requestDateFilter" onchange="filterRequestsByDate()">
+          <option value="all">All Dates</option>
+          <option value="today">Today</option>
+          <option value="week">This Week</option>
+          <option value="month">This Month</option>
+          <option value="year">This Year</option>
+        </select></div><div class="filter-group">
+        <label for="requestStatusFilter">Filter by Status:</label>
+        <select id="requestStatusFilter" onchange="filterRequestsByStatus()">
+          <option value="all">All Statuses</option>
+          <option value="pending">Pending</option>
+          <option value="accepted">Accepted</option>
+        </select></div>
+      <button class="reset-btn" onclick="resetRequestFilters()">Reset Filters</button>
+    </div>
+    <div class="alert alert-info" id="noRequestsAlert" style="display: none;">
+      You haven't made any blood requests yet. Click "Request Blood" to create one.
+    </div><table id="requestsTable"><thead><tr>
+          <th>Patient Name</th>
+          <th>Blood Type</th>
+          <th>Status</th>
+          <th>Action</th></tr></thead>
+      <tbody id="requestList"></tbody> </table>
+    <h2>Available Donors</h2>
+    <div class="filter-container">
+      <div class="filter-group">
+        <label for="bloodTypeFilter">Filter by Blood Type:</label>
+        <select id="bloodTypeFilter" onchange="filterDonorsByBloodType()">
+          <option value="all">All Blood Types</option>
+          <option value="A+">A+</option>
+          <option value="A-">A-</option>
+          <option value="B+">B+</option>
+          <option value="B-">B-</option>
+          <option value="O+">O+</option>
+          <option value="O-">O-</option>
+          <option value="AB+">AB+</option>
+          <option value="AB-">AB-</option></select>
+      </div><div class="filter-group">
+        <label for="donorSearch">Search:</label>
+        <input type="text" id="donorSearch" class="search-box" placeholder="Search by name..." onkeyup="searchDonors()">
+      </div>
+      <button class="reset-btn" onclick="resetDonorFilters()">Reset Filters</button>
+    </div>
+    <div class="alert alert-warning" id="noDonorsAlert" style="display: none;">
+      No available donors in your area. Try expanding your search range.
+    </div><table id="donorsTable">
+      <thead><tr><th>Name</th>
+          <th>Blood Type</th>
+          <th>Age</th>
+          <th>Gender</th>
+          <th>Contact</th>
+          <th>Location</th>
+          <th>Last Donation</th>
+          <th>Availability</th>
+          <th>Eligibility</th>
+          <th>Action</th>
+        </tr> </thead>
+      <tbody id="donorList"></tbody></table>
+<h2>Blood Stock Availability</h2>
+    <div class="alert alert-danger" id="criticalStockAlert" style="display: none;">
+      Critical blood levels detected! Please request more donors.
+    </div><table><thead><tr><th>Blood Type</th>
+          <th>Available Donors</th>
+          <th>Status</th>
+        </tr></thead>
+      <tbody id="bloodSupplyList"></tbody>
+    </table></div><script>
+    function initializeData() {
+      if (!localStorage.getItem('donors')) {
+        const sampleDonors = [
+          { id: 1, name: "John Doe", phone: "555-0101", bloodGroup: "A+", location: "New York", lastDonation: "2023-05-15" },
+          { id: 2, name: "Jane Smith", phone: "555-0102", bloodGroup: "B-", location: "New York", lastDonation: "2023-06-20" },
+          { id: 3, name: "Mike Johnson", phone: "555-0103", bloodGroup: "O+", location: "New York", lastDonation: "2023-07-10" },
+          { id: 4, name: "Sarah Williams", phone: "555-0104", bloodGroup: "AB+", location: "New York", lastDonation: "2023-04-05" },
+          { id: 5, name: "David Brown", phone: "555-0105", bloodGroup: "A-", location: "New York", lastDonation: "2023-08-01" }
+        ];
+        localStorage.setItem('donors', JSON.stringify(sampleDonors));
+      }
+      if (!localStorage.getItem('bloodRequests')) {
+        const currentDate = new Date();
+        const sampleRequests = [
+          { 
+            id: 1, 
+            patientName: "John Smith",
+            bloodType: "A+", 
+            quantity: 2, 
+            hospitalName: "City General Hospital", 
+            location: "New York", 
+            contact: "555-1000",
+            date: currentDate.toISOString().split('T')[0],
+            status: "pending" }];
+        localStorage.setItem('bloodRequests', JSON.stringify(sampleRequests));
+      }
+      if (!localStorage.getItem('acceptedRequests')) {
+        localStorage.setItem('acceptedRequests', JSON.stringify([]));
+      }
+      if (!localStorage.getItem('userLocation')) {
+        localStorage.setItem('userLocation', "New York");
+      }}
+    function checkLogin() {
+      initializeData();
+       if (!localStorage.getItem("currentUser")) {
+        const sampleHospital = {
+          id: 1,
+          name: "City General Hospital",
+          userType: "hospital",
+          location: "New York",
+          contact: "555-1000"
+        };
+        localStorage.setItem("currentUser", JSON.stringify(sampleHospital));
+      }const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      if (currentUser.userType !== "hospital") {
+        alert("Please login as a hospital first!");
+        window.location.href = "registrationpage.html";
+      } else {
+        document.getElementById("welcomeHospital").textContent = `Welcome, ${currentUser.name}!`;
+        loadBloodSupply();
+        loadRequests();
+        loadDonors();
+      }}
+    function loadBloodSupply() {
+      const donors = JSON.parse(localStorage.getItem("donors")) || [];
+      const userLocation = localStorage.getItem("userLocation") || "New York";
+      const bloodSupply = {};
+      let criticalLevel = false;
+      donors.forEach(donor => {
+        if (donor.bloodGroup && donor.location === userLocation) {
+          bloodSupply[donor.bloodGroup] = (bloodSupply[donor.bloodGroup] || 0) + 1;
+        }});
+const bloodSupplyTable = document.getElementById("bloodSupplyList");
+      bloodSupplyTable.innerHTML = "";
+      const allBloodTypes = ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"];
+      allBloodTypes.forEach(bloodType => {
+        const count = bloodSupply[bloodType] || 0;
+        let status = "";
+         if (count === 0) {
+          status = '<span class="status status-critical">Critical</span>';
+          criticalLevel = true;
+        } else if (count < 3) {
+          status = '<span class="status status-pending">Low</span>';
+          criticalLevel = true;
+        } else {
+          status = '<span class="status status-accepted">Sufficient</span>';
+        } bloodSupplyTable.innerHTML += `
+          <tr><td>${bloodType}</td>
+            <td>${count} donors</td>
+            <td>${status}</td>
+          </tr>
+        `; }); 
+      document.getElementById("criticalStockAlert").style.display = criticalLevel ? "block" : "none";
+    }function loadRequests() {
+      const requests = JSON.parse(localStorage.getItem("bloodRequests")) || [];
+      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      const acceptedRequests = JSON.parse(localStorage.getItem("acceptedRequests")) || [];
+ const requestTable = document.getElementById("requestList");
+      requestTable.innerHTML = "";
+let hospitalRequests = requests.filter(request => request.hospitalName === currentUser.name);
+      const dateFilter = document.getElementById("requestDateFilter").value;
+      if (dateFilter !== "all") {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+          hospitalRequests = hospitalRequests.filter(request => {
+          const requestDate = new Date(request.date);
+          requestDate.setHours(0, 0, 0, 0);
+          switch(dateFilter) {
+            case "today":
+              return requestDate.getTime() === today.getTime();
+            case "week":
+              const weekAgo = new Date(today);
+              weekAgo.setDate(today.getDate() - 7);
+              return requestDate >= weekAgo && requestDate <= today;
+            case "month":
+              const monthAgo = new Date(today);
+              monthAgo.setMonth(today.getMonth() - 1);
+              return requestDate >= monthAgo && requestDate <= today;
+            case "year":
+              const yearAgo = new Date(today);
+              yearAgo.setFullYear(today.getFullYear() - 1);
+              return requestDate >= yearAgo && requestDate <= today;
+            default:
+              return true; } });}
+      const statusFilter = document.getElementById("requestStatusFilter").value;
+      if (statusFilter !== "all") {
+        hospitalRequests = hospitalRequests.filter(request => {
+          const isAccepted = acceptedRequests.some(req => req.requestId === request.id);
+          return statusFilter === "accepted" ? isAccepted : !isAccepted;
+        });}if (hospitalRequests.length === 0) {
+        document.getElementById("noRequestsAlert").style.display = "block";
+        document.getElementById("requestsTable").style.display = "none";
+      } else {
+        document.getElementById("noRequestsAlert").style.display = "none";
+        document.getElementById("requestsTable").style.display = "table";
+      }hospitalRequests.forEach((request) => {
+        const isAccepted = acceptedRequests.some(req => req.requestId === request.id);        
+        const status = isAccepted 
+          ? '<span class="status status-accepted">Accepted</span>'
+          : '<span class="status status-pending">Pending</span>';
+        const deleteBtn = isAccepted
+          ? '<button class="btn btn-danger" disabled>Delete</button>'
+          : `<button class="btn btn-danger" onclick="deleteRequest('${request.id}')">Delete</button>`;
+        requestTable.innerHTML += `
+          <tr><td>${request.patientName}</td>
+            <td>${request.bloodType}</td>
+            <td>${status}</td>
+            <td>${deleteBtn}</td></tr>
+        `;
+      });
+    }function filterRequestsByDate() {
+      loadRequests();
+    }function filterRequestsByStatus() {
+      loadRequests();
+    }function resetRequestFilters() {
+      document.getElementById("requestDateFilter").value = "all";
+      document.getElementById("requestStatusFilter").value = "all";
+      loadRequests();
+    }function deleteRequest(requestId) {
+      const requests = JSON.parse(localStorage.getItem("bloodRequests")) || [];
+      const updatedRequests = requests.filter(request => request.id !== parseInt(requestId));
+      localStorage.setItem("bloodRequests", JSON.stringify(updatedRequests));
+      loadRequests();
+    }function loadDonors() {
+  const donors = JSON.parse(localStorage.getItem("donors")) || [];
+  const userLocation = localStorage.getItem("userLocation") || "New York";
+  const acceptedRequests = JSON.parse(localStorage.getItem("acceptedRequests")) || [];
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const bloodRequests = JSON.parse(localStorage.getItem("bloodRequests")) || [];
+  const donorTable = document.getElementById("donorList");
+  donorTable.innerHTML = "";
+  let nearbyDonors = donors.filter(donor => 
+    donor.location === userLocation && 
+    donor.availability === "available"
+  );
+  const bloodTypeFilter = document.getElementById("bloodTypeFilter").value;
+  if (bloodTypeFilter !== "all") {
+    nearbyDonors = nearbyDonors.filter(donor => donor.bloodGroup === bloodTypeFilter);
+  }
+  const searchTerm = document.getElementById("donorSearch").value.toLowerCase();
+  if (searchTerm) {
+    nearbyDonors = nearbyDonors.filter(donor => 
+      donor.name.toLowerCase().includes(searchTerm) || 
+      donor.phone.includes(searchTerm)
+    );
+  }if (nearbyDonors.length === 0) {
+    document.getElementById("noDonorsAlert").style.display = "block";
+    document.getElementById("donorsTable").style.display = "none";
+  } else {
+    document.getElementById("noDonorsAlert").style.display = "none";
+    document.getElementById("donorsTable").style.display = "table";
+  }nearbyDonors.forEach(donor => {
+    const lastDonation = donor.lastDonation ? new Date(donor.lastDonation) : null;
+    const today = new Date();
+    let isEligible = true;
+    let eligibilityMessage = "Eligible";
+    if (lastDonation) {
+      const monthsDiff = (today.getFullYear() - lastDonation.getFullYear()) * 12 + 
+                       (today.getMonth() - lastDonation.getMonth());
+      isEligible = monthsDiff >= 3;
+      eligibilityMessage = isEligible ? "Eligible" : `Eligible in ${3 - monthsDiff} month(s)`;
+    }
+    const hasAccepted = acceptedRequests.some(req => 
+      req.donorId === donor.id && req.hospitalName === currentUser.name
+    );
+    const hasMatchingRequest = bloodRequests.some(req => 
+      req.hospitalName === currentUser.name && 
+      req.bloodType === donor.bloodGroup &&
+      !acceptedRequests.some(ar => ar.requestId === req.id)
+    );
+     let status, actionBtn;if (hasAccepted) {
+      status = '<span class="status status-accepted">Already Donating</span>';
+      actionBtn = '<button class="btn btn-secondary" disabled>Request Sent</button>';
+    } else if (!hasMatchingRequest) {
+      status = '<span class="status status-available">Available</span>';
+      actionBtn = '<button class="btn btn-secondary" disabled>No Matching Request</button>';
+    } else if (!isEligible) {
+      status = '<span class="status status-pending">Recently Donated</span>';
+      actionBtn = `<button class="btn btn-secondary" disabled>${eligibilityMessage}</button>`;
+    } else {
+      status = '<span class="status status-available">Available</span>';
+      actionBtn = `<button class="btn btn-primary" onclick="sendRequest('${donor.id}', '${donor.name}', '${donor.bloodGroup}')">Request Donation</button>`;
+    }donorTable.innerHTML += `
+      <tr><td>${donor.name}</td>
+        <td>${donor.bloodGroup}</td>
+        <td>${donor.age}</td>
+        <td>${donor.gender}</td>
+        <td>${donor.phone}</td>
+        <td>${donor.location}</td>
+        <td>${donor.lastDonation ? new Date(donor.lastDonation).toLocaleDateString() : 'Never'}</td>
+        <td><span class="status ${donor.availability === 'available' ? 'status-available' : 'status-critical'}">
+          ${donor.availability === 'available' ? 'Available' : 'Unavailable'}
+        </span></td><td>${eligibilityMessage}</td>
+        <td>${actionBtn}</td></tr>
+    `;
+  });}function filterDonorsByBloodType() {
+      loadDonors();
+    }function searchDonors() {
+      loadDonors();
+    } function resetDonorFilters() {
+      document.getElementById("bloodTypeFilter").value = "all";
+      document.getElementById("donorSearch").value = "";
+      loadDonors();
+    }function sendRequest(donorId, name, bloodGroup) {
+  const acceptedRequests = JSON.parse(localStorage.getItem("acceptedRequests")) || [];
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const bloodRequests = JSON.parse(localStorage.getItem("bloodRequests")) || [];
+  const donors = JSON.parse(localStorage.getItem("donors")) || [];
+  const donor = donors.find(d => d.id === parseInt(donorId));
+  if (!donor) {
+    alert("Donor not found!");
+    return;
+  }const matchingRequest = bloodRequests.find(req => 
+    req.hospitalName === currentUser.name && 
+    req.bloodType === bloodGroup &&
+    !acceptedRequests.some(ar => ar.requestId === req.id)
+  );if (!matchingRequest) {
+    alert("No matching blood request found for this donor's blood type!");
+    return;
+  }acceptedRequests.push({
+    requestId: matchingRequest.id,
+    donorId: donor.id,
+    donorName: name,
+    donorPhone: donor.phone,
+    donorBloodGroup: bloodGroup,
+    hospitalName: currentUser.name,
+    hospitalLocation: currentUser.location,
+    date: new Date().toISOString(),
+    status: "pending"
+  });localStorage.setItem("acceptedRequests", JSON.stringify(acceptedRequests));
+  alert(`Request sent to ${name}`);
+  loadDonors();
+  loadRequests();
+}function logout() {
+      localStorage.removeItem("currentUser");
+      alert("Logged out successfully!");
+      window.location.href = "registrationpage.html";
+    }
+    window.onload = checkLogin;
+  </script>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'en,hi,te,ta,fr,es,ar,zh',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_element'); }</script>
+  <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'en,hi,te,ta,fr,es,ar,zh',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, 'google_translate_element');}</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body></html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Patient Home - Blood Link</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <link rel="icon" type="image/x-icon" href="favicon.jpg">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #b7b8b8 0%, #79a4e7 100%);
+      color: #415d7b;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .navbar {
+      background-color: #e64568; /* Primary Blue */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .navbar-brand {
+      font-weight: 600;
+      color: #ffffff !important;
+    }
+    .navbar-nav .nav-link {
+      color: rgba(255, 255, 255, 0.9);
+      padding: 0.75rem 1rem;
+    }
+    .navbar-nav .nav-link:hover {
+      color: #ffffff;
+    }
+    .container {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+    }
+    .hero-section {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 50px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      max-width: 900px;
+      width: 100%;
+    }
+    h1 {
+      color: #877299;
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 30px;
+    }
+    .hero-section p {
+      font-size: 1.1rem;
+      color: #6c757d;
+      line-height: 1.8;
+      margin-bottom: 40px;
+    }
+    .btn-primary,
+    .btn-info,
+    .btn-warning,
+    .btn-success,
+    .btn-dark {
+      padding: 12px 25px;
+      font-size: 1.05rem;
+      border-radius: 8px;
+      margin: 10px;
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    .btn-primary:hover,
+    .btn-info:hover,
+    .btn-warning:hover,
+    .btn-success:hover,
+    .btn-dark:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+    footer {
+      background-color: #343a40;
+      color: #ffffff;
+      text-align: center;
+      padding: 1rem 0;
+      font-size: 0.9rem;
+      border-top: 1px solid #6c757d;
+    }</style></head>
+<body><nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"><i class="fas fa-hand-holding-heart me-2"></i>Blood Link</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="patient-profile.html"><i class="fas fa-id-card-alt me-1"></i> Profile</a>
+          </li><li class="nav-item">
+            <a class="nav-link" href="request-blood.html"><i class="fas fa-tint me-1"></i> Request Blood</a>
+          </li><li class="nav-item">
+            <a class="nav-link" href="blog.html"><i class="fas fa-book-open me-1"></i> Blog</a>
+          </li><li class="nav-item">
+            <a class="nav-link" href="faqp.html"><i class="fas fa-question-circle me-1"></i> FAQ</a>
+          </li><li class="nav-item">
+            <a class="nav-link" href="contactp.html"><i class="fas fa-envelope me-1"></i> Contact Us</a>
+          </li><li class="nav-item">
+            <a class="nav-link" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-1"></i> Logout</a>
+          </li></ul></div></div></nav>
+  <div class="container">
+    <div class="hero-section">
+      <h1><i class="fas fa-heartbeat me-2"></i> Welcome, Patient</h1>
+      <p>Need blood? Request now and our community of donors will come to your aid. You can also manage your profile and explore health education resources to stay informed and prepared.</p>
+      <a href="request-blood.html" class="btn btn-danger"><i class="fas fa-hand-holding-droplet me-2"></i> Request Blood</a>
+    </div></div>
+  <footer class="mt-auto">
+    &copy; 2025 Blood Link - Connecting Hearts, Saving Lives
+  </footer>
+  <script>
+    function logout() {
+      window.location.href = "homepage.html";
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'en,hi,te,ta,fr,es,ar,zh',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_element');
+    }
+  </script> 
+  <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  </body></html>

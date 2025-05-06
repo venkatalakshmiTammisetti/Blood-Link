@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Link: Blood Donation Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="favicon.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #b7b8b8 0%, #79a4e7 100%);
+            color: #343a40;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        .navbar {
+            background-color: hsla(347, 87%, 50%, 0.988);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand {
+            font-weight: 600;
+            color: #ffffff !important;
+        }
+        .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            transition: color 0.3s ease-in-out;
+            padding: 0.75rem 1rem;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #ffffff;
+        }
+        .header-links {
+            background-color: #e9ecef;
+            padding: 1rem 0;
+            text-align: center;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .header-links a {
+            margin: 0 1.5rem;
+            text-decoration: none;
+            color: #495057;
+            font-size: 0.9rem;
+            transition: color 0.3s ease-in-out;
+        }
+        .header-links a:hover {
+            color: #007bff;
+        }
+        .container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+        .hero-section {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            max-width: 900px;
+            width: 100%;
+        }
+        h1 {
+            color: #877299;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+        }
+        .hero-section p {
+            font-size: 1.1rem;
+            color: #eb0b61;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+        .btn-primary, .btn-success {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            margin: 0 15px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+        .btn-success:hover {
+            background-color: #1e7e34;
+            border-color: #1e7e34;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        footer {
+            background-color: #343a40;
+            color: #ffffff;
+            text-align: center;
+            padding: 1rem 0;
+            font-size: 0.9rem;
+            border-top: 1px solid #6c757d;
+        }
+        #google_translate_element {
+            margin-right: 1rem;
+        }
+        #google_translate_element select {
+            background-color: #e64568;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 6px 12px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        #google_translate_element select:hover {
+            background-color: #c9304d;
+        }
+        .goog-logo-link,
+        .goog-te-gadget span {
+            display: none !important;
+        }
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+        body {
+            top: 0px !important;
+        }
+.scrolling-stats {
+    background: #ffffff;
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+.stats-bar {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.stats-content {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+.blood-types-scroll {
+    flex-grow: 1;
+    overflow: hidden;
+    position: relative;
+}
+.scrolling-wrapper {
+    display: flex;
+    gap: 1rem;
+    animation: scroll 20s linear infinite;
+    width: max-content;
+}
+.blood-type-item {
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    min-width: 100px;
+    justify-content: center;
+}
+.stat-item {
+    font-size: 1.2rem;
+    color: #2c3e50;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+}
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+.blood-types-scroll:hover .scrolling-wrapper {
+    animation-play-state: paused;
+}
+@media (max-width: 768px) {
+    .stats-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .scrolling-wrapper {
+        animation-duration: 25s;
+    }
+}</style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html"><i class="fas fa-tint me-2"></i>Blood Link</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item me-2" id="google_translate_element"></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="homepage.html"><i class="fas fa-home me-1"></i> Home</a>
+                    </li><li class="nav-item">
+                        <a class="nav-link" href="registrationpage.html"><i class="fas fa-user-plus me-1"></i> Register/Login</a>
+                    </li><li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-tachometer-alt me-1"></i> Donor Dashboard</a>
+                    </li><li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-hospital me-1"></i> Hospital Dashboard</a>
+                    </li><li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-hand-holding-droplet me-1"></i> Blood Request</a>
+                    </li><li class="nav-item">
+                        <a class="nav-link" href="contacth.html"><i class="fas fa-envelope me-1"></i> Contact Us</a>
+                    </li></ul></div></div></nav>
+    <div class="header-links">
+        <a href="#"><i class="fas fa-id-card-alt me-1"></i> Donor Profile</a>
+        <a href="#"><i class="fas fa-exclamation-triangle me-1"></i> Emergency Blood</a>
+        <a href="#"><i class="fas fa-certificate me-1"></i> Certification</a>
+        <a href="#"><i class="fas fa-trophy me-1"></i> Challenges</a>
+        <a href="blog.html"><i class="fas fa-book-open me-1"></i> Blog & Education</a>
+        <a href="faq.html"><i class="fas fa-question-circle me-1"></i> FAQ</a></div>
+    <div class="scrolling-stats">
+    <div class="stats-bar">
+        <div class="stats-content">
+            <div class="stat-item">
+                <i class="fas fa-users"></i>
+                <span id="totalDonors">0</span> Donors</div>
+            <div class="blood-types-scroll">
+                <div class="scrolling-wrapper">
+                    <div class="blood-type-item" style="background-color: #ff4444">A+ <span class="count">0</span></div>
+                    <div class="blood-type-item" style="background-color: #ff6666">A- <span class="count">0</span></div>
+                    <div class="blood-type-item" style="background-color: #ff8888">B+ <span class="count">0</span></div>
+                    <div class="blood-type-item" style="background-color: #ffaaaa">B- <span class="count">0</span></div>
+                    <div class="blood-type-item" style="background-color: #ffcccc">O+ <span class="count">0</span></div>
+                    <div class="blood-type-item" style="background-color: #ffeeee">O- <span class="count">0</span></div>
+                    <div class="blood-type-item" style="background-color: #ccffcc">AB+ <span class="count">0</span></div>
+                    <div class="blood-type-item" style="background-color: #aaffaa">AB- <span class="count">0</span></div>
+                </div></div></div></div></div>
+    <div class="container">
+        <div class="hero-section">
+            <h1><i class="fas fa-heartbeat me-3"></i> Your Contribution Saves Lives</h1>
+            <p>Join our dedicated community on Empower Life, a platform designed to seamlessly connect blood donors with individuals and healthcare facilities in urgent need. Your selfless act can bring hope and healing to those facing critical health challenges.</p>
+            <a href="registrationpage.html" class="btn btn-primary btn-lg"><i class="fas fa-user-plus me-2"></i> Register/Login</a>
+            <a href="registrationpage.html" class="btn btn-success btn-lg"><i class="fas fa-tint me-2"></i> Request Blood</a></div></div>
+    <footer class="mt-auto">
+        &copy; 2025 Blood Link - Connecting Hearts, Saving Lives
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+          new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'en,hi,te,ta,fr,es,ar,zh',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false
+          }, 'google_translate_element');
+        }
+    </script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+ </body>
+<script>
+function updateDonorStats() {
+    const donors = JSON.parse(localStorage.getItem('donors')) || [];
+    document.getElementById('totalDonors').textContent = donors.length;
+
+    const bloodCounts = {
+        'A+': 0, 'A-': 0, 'B+': 0, 'B-': 0,
+        'O+': 0, 'O-': 0, 'AB+': 0, 'AB-': 0
+    };
+    donors.forEach(donor => {
+        if (bloodCounts.hasOwnProperty(donor.bloodGroup)) {
+            bloodCounts[donor.bloodGroup]++;
+        }
+    });
+    document.querySelectorAll('.blood-type-item').forEach(item => {
+        const bloodType = item.textContent.split(' ')[0];
+        const countElement = item.querySelector('.count');
+        countElement.textContent = bloodCounts[bloodType];
+    });
+}
+updateDonorStats();
+</script></body></html>

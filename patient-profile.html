@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Patient Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>:root {
+      --primary-color: #6c14c9;
+      --secondary-color: #e12141;
+      --accent-color: #f62661;
+      --light-color: #f8f9fa;
+      --dark-color: #212529;
+      --success-color: #28a745;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: linear-gradient(135deg, #b7b8b8 0%, #79a4e7 100%);
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .profile-container {
+      width: 100%;
+      max-width: 850px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    .profile-header {
+      background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 20px 30px 30px;
+      text-align: center;
+    }
+    .profile-pic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin: 0 auto 15px;
+      overflow: hidden;
+      position: relative;
+      border: 4px solid white;
+    }
+    .profile-pic img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .upload-btn {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background: var(--primary-color);
+      border: none;
+      color: white;
+      font-size: 14px;
+      padding: 5px 8px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .upload-btn input {
+      display: none;
+    }
+    .profile-content {
+      padding: 30px;
+    }
+    .profile-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .input-group {
+      margin-bottom: 15px;
+    }
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--dark-color);
+      font-weight: 500;
+    }
+    .input-group input,
+    .input-group select,
+    .input-group textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      background-color: var(--light-color);
+    }
+    .input-group input:disabled,
+    .input-group select:disabled,
+    .input-group textarea:disabled {
+      background-color: #e9ecef;
+    }
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
+    .btn {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 500;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+    }
+    .save-btn-container {
+      text-align: center;
+      margin-top: 20px;
+      display: none;
+    }
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: var(--success-color);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      transform: translateX(150%);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+    .toast.show {
+      transform: translateX(0);
+    }
+  </style></head><body><div class="profile-container">
+    <div class="profile-header">
+      <div class="profile-pic" id="profilePicContainer">
+        <img id="profileImage" src="https://via.placeholder.com/120" alt="Profile" />
+        <label class="upload-btn" title="Upload">
+          <i class="fas fa-camera"></i>
+          <input type="file" accept="image/*" onchange="uploadPhoto(event)">
+        </label></div><h2 id="displayName">Patient</h2>
+      <p>Patient ID: <span id="patientId">PT000000</span></p>
+    </div>
+    <div class="profile-content"><div class="profile-details">
+        <div> <div class="input-group"><label>Full Name</label><input type="text" id="name" disabled></div>
+          <div class="input-group"><label>Email</label><input type="email" id="email" disabled></div>
+          <div class="input-group"><label>Phone</label><input type="tel" id="phone" disabled></div>
+          <div class="input-group">
+            <label>Gender</label> <select id="gender" disabled>
+              <option value="">Select</option><option>Male</option><option>Female</option><option>Other</option>
+            </select></div></div><div>
+          <div class="input-group"><label>DOB</label><input type="date" id="dob" disabled></div>
+          <div class="input-group"><label>Blood Group</label>
+            <select id="blood" disabled>
+              <option value="">Select</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+              <option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
+            </select></div><div class="input-group"><label>Address</label><textarea id="address" rows="3" disabled></textarea></div>
+        </div></div>
+      <div class="medical-info" style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
+        <h3 style="margin-bottom: 15px;">Medical Information</h3>
+        <div class="input-group"><label>Allergies</label><input type="text" id="allergies" disabled></div>
+        <div class="input-group"><label>Conditions</label><textarea id="conditions" rows="2" disabled></textarea></div>
+        <div class="input-group"><label>Medications</label><textarea id="medications" rows="2" disabled></textarea></div>
+      </div><div class="action-buttons">
+        <button class="btn btn-primary" id="editBtn" onclick="toggleEdit()"><i class="fas fa-edit"></i>Edit</button>
+        <button class="btn btn-outline" id="cancelBtn" onclick="location.reload()" style="display: none;"><i class="fas fa-times"></i>Cancel</button>
+      </div><div class="save-btn-container" id="saveBtnContainer">
+        <button class="btn btn-primary" onclick="saveProfile()"><i class="fas fa-save"></i>Save</button>
+      </div> </div></div>
+  <div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMessage">Profile updated!</span></div>
+  <script>
+    const fields = ["name", "email", "phone", "gender", "dob", "blood", "address", "allergies", "conditions", "medications"];
+    document.addEventListener("DOMContentLoaded", () => {
+      const currentUser = JSON.parse(localStorage.getItem("currentUser")) || {};
+       if (!currentUser.email || currentUser.userType !== "patient") {
+        window.location.href = "registrationpage.html";
+        return; }
+      document.getElementById("name").value = currentUser.name || "";
+      document.getElementById("email").value = currentUser.email || "";
+      document.getElementById("phone").value = currentUser.phone || "";
+      document.getElementById("blood").value = currentUser.bloodGroup || "";
+      document.getElementById("address").value = currentUser.location || "";
+      document.getElementById("conditions").value = currentUser.medicalCondition || "";
+      document.getElementById("displayName").textContent = currentUser.name || "Patient";
+      if (currentUser.profilePic) {
+        document.getElementById("profileImage").src = currentUser.profilePic;
+      } else {
+        document.getElementById("profileImage").src = `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.name || "Patient")}&background=random`;
+      }
+      document.getElementById("patientId").textContent = currentUser.patientId || ("PT" + Math.floor(100000 + Math.random() * 900000));
+    }); function toggleEdit() {
+      fields.forEach(id => document.getElementById(id).disabled = false);
+      document.getElementById("saveBtnContainer").style.display = "block";
+      document.getElementById("editBtn").style.display = "none";
+      document.getElementById("cancelBtn").style.display = "inline-block";
+    }function saveProfile() {
+      const currentUser = JSON.parse(localStorage.getItem("currentUser")) || {};
+       fields.forEach(id => {
+        currentUser[id] = document.getElementById(id).value;
+      });
+      localStorage.setItem("currentUser", JSON.stringify(currentUser));
+      let patients = JSON.parse(localStorage.getItem("patients")) || [];
+      const patientIndex = patients.findIndex(p => p.email === currentUser.email);
+      if (patientIndex !== -1) {
+        patients[patientIndex] = currentUser;
+        localStorage.setItem("patients", JSON.stringify(patients));
+      }showToast("Profile updated!");
+      setTimeout(() => {
+        window.location.href = "patienthome.html";
+      }, 1000);
+    }function uploadPhoto(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById("profileImage").src = e.target.result;
+        const currentUser = JSON.parse(localStorage.getItem("currentUser")) || {};
+        currentUser.profilePic = e.target.result;
+        localStorage.setItem("currentUser", JSON.stringify(currentUser));
+      };reader.readAsDataURL(file);
+    }function showToast(msg) {
+      const toast = document.getElementById("toast");
+      document.getElementById("toastMessage").textContent = msg;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 3000);
+    }
+  </script>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'en,hi,te,ta,fr,es,ar,zh',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_element');
+    }
+  </script><script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  </body></html>
