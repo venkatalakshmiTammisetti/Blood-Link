@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🩸 Blood-Link — Emergency Blood Donation System
 
 Production-structured full-stack app connecting **patients**, **verified donors**, and **admins** for emergency blood coordination.
@@ -128,3 +129,7 @@ See `backend/.env.example`:
 ## License
 
 MIT
+=======
+# Blood-Link
+Blood-Link is a full-stack MERN project that helps connect blood donors and recipients in real time, making blood donation faster and more accessible during emergencies.
+>>>>>>> cda80db2578ad3ae0fe48cae90645b0e7e18fca4
